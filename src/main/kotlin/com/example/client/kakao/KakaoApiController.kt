@@ -8,17 +8,18 @@ import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "Kakao API", description = "the Kakao API")
+@Tag(name = "Kakao API", description = "Kakao API...")
 @RequestMapping("/api/v1/kakao")
 @RestController
 class KakaoApiController(
-        val kakaoApiService: KakaoApiService
+    val kakaoApiService: KakaoApiService
 ) {
     @Operation(summary = "Blog 게시글 목록 조회", description = "Blog 게시글 목록을 조회합니다.")
     @GetMapping("/blog")
-    fun searchBlog(@Valid blogDto: BlogRequestDto): ResponseEntity<String>? {
+    fun searchBlog(@Valid @RequestParam blogDto: BlogRequestDto): ResponseEntity<String>? {
         val result: String? = kakaoApiService.searchBlog(blogDto)
 
         return ResponseEntity.ok(result)
