@@ -1,0 +1,27 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      force: true
+
+springdoc:
+  packages-to-scan: com.example.client
+  paths-to-match: /api/**
+  api-docs:
+    version: openapi_3_1
+    path: /swagger/api-docs
+  swagger-ui:
+    path: /swagger/swagger-ui.html
+    display-request-duration: true
+    operations-sorter: alpha
+    tags-sorter: alpha
+    disable-swagger-default-url: true
+    use-root-path: true
+
+logging:
+  pattern:
+    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+
+REST_API_KEY: ""
