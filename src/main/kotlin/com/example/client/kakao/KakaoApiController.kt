@@ -3,6 +3,8 @@ package com.example.client.kakao
 import com.example.client.common.exception.InvalidInputException
 import com.example.client.kakao.dto.BlogRequestDto
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.enums.ParameterIn
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
@@ -17,9 +19,17 @@ import org.springframework.web.bind.annotation.RestController
 class KakaoApiController(
     val kakaoApiService: KakaoApiService
 ) {
-    @Operation(summary = "Blog 게시글 목록 조회", description = "Blog 게시글 목록을 조회합니다.")
+    @Operation(summary = "Blog 게시글 목록 조회",
+            description = "Blog 게시글 목록을 조회합니다.",
+            parameters = [
+                Parameter(name = "query", `in` = ParameterIn.QUERY),
+                Parameter(name = "sort", `in` = ParameterIn.QUERY),
+                Parameter(name = "page", `in` = ParameterIn.QUERY),
+                Parameter(name = "size", `in` = ParameterIn.QUERY)
+            ]
+    )
     @GetMapping("/blog")
-    fun searchBlog(@Valid @RequestParam blogDto: BlogRequestDto): ResponseEntity<String>? {
+    fun searchBlog(@Valid @Parameter(hidden = true) blogDto: BlogRequestDto): ResponseEntity<String>? {
         val result: String? = kakaoApiService.searchBlog(blogDto)
 
         return ResponseEntity.ok(result)

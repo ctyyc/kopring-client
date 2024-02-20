@@ -27,25 +27,17 @@ class KakaoApiService(
                 .get()
                 .uri {
                     it.path("/v2/search/blog")
-                        .queryParam("query", blogDto.query)
-                        .queryParam("sort", blogDto.sort)
-                        .queryParam("page", blogDto.page)
-                        .queryParam("size", blogDto.size)
-                        .build()
+                            .queryParam("query", blogDto.query)
+                            .queryParam("sort", blogDto.sort)
+                            .queryParam("page", blogDto.page)
+                            .queryParam("size", blogDto.size)
+                            .build()
                 }
                 .header("Authorization", "KakaoAK $restApiKey")
                 .retrieve()
                 .bodyToMono<String>()
 
-        val result = response.block()
-
-//        val lowQuery: String = blogDto.query.lowercase()
-//        val word: WordCount = wordCountRepository.findById(lowQuery).orElse(WordCount(lowQuery))
-//        word.cnt++
-//
-//        wordCountRepository.save(word)
-
-        return result
+        return response.block()
     }
 
     fun searchBook(query: String, sort: String?, page: Int?, size: Int?, target: String?): String? {
@@ -56,9 +48,10 @@ class KakaoApiService(
         val params = mapOf(
                 "query" to query,
                 "sort" to sort,
-                "page" to page,
-                "size" to size,
-                "target" to target)
+                "page" to page.toString(),
+                "size" to size.toString(),
+                "target" to target
+        )
 
         val response = httpHelper.requestGetResponseString(
                 "/v3/search/book",
